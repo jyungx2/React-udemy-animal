@@ -1,9 +1,19 @@
 import { useState } from "react";
+import AnimalShow from "./AnimalShow";
+import "./App.css";
+
+function getRandomAnimal() {
+  const animals = ["bird", "cat", "cow", "dog", "gator", "horse"];
+
+  return animals[Math.floor(Math.random() * animals.length)];
+}
 
 // State: 유저가 앱과의 상호작용을 하면서 변하는 데이터
 // 이 데이터(state)가 바뀌는 순간, 리액트는 화면에 있는 요소를 자동으로 업데이트 한다. 여기서 useState 함수를 사용하는데, 이는 리액트가 보여줄 컨텐츠를 바꿀 수 있는 하나의 유일한 방법이다.
 // -> If you want to change what is visible on screen in reaction to a use event, you want to use state.
+
 function App() {
+  /*
   const [count, setCount] = useState(0);
   // 0: starting default data
   // count: 💥The piece of state!💥 (starts as 0..changes over time) -> num/str/arr/obj....whatever data!
@@ -14,11 +24,23 @@ function App() {
     // 🎉Oh, you updated a piece of state! It's time to Rerender your component🎉
     setCount(count + 1);
   };
+  */
+  const [animals, setAnimals] = useState([]);
+
+  const handleClick = () => {
+    // This will modify a piece of state!!
+    // animals.push(getRandomAnimal());
+    setAnimals([...animals, getRandomAnimal()]);
+  };
+
+  const renderedAnimals = animals.map((animal, index) => {
+    return <AnimalShow type={animal} key={index} />;
+  });
 
   return (
-    <div>
+    <div className="app">
       <button onClick={handleClick}>Add Animal</button>
-      <div>Number of animals: {count}</div>
+      <div className="animal-list">{renderedAnimals}</div>
     </div>
   );
 }
